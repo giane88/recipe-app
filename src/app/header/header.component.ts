@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
              selector: 'app-header',
@@ -6,15 +7,13 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
              styleUrls: ['./header.component.css']
            })
 export class HeaderComponent implements OnInit {
-  @Output('showShopping') featureSelected = new EventEmitter<string>();
-
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
   }
 
   onSelect(feature: string) {
-    this.featureSelected.emit(feature);
+    this.router.navigate([feature]);
   }
 }
