@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Recipe} from '../recipe.model';
 import {RecipeService} from '../recipe.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import { BehaviorSubject } from "rxjs";
 @Component({
              selector: 'app-recipe-detail',
              templateUrl: './recipe-detail.component.html',
@@ -10,7 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
            })
 export class RecipeDetailComponent implements OnInit {
 
-  private recipe: Recipe;
+  public recipe: BehaviorSubject<Recipe>;
 
   constructor(private recipeService: RecipeService, private activatedRoute: ActivatedRoute, private router: Router) {
   }
@@ -18,13 +18,13 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.params.subscribe(
       (data: Params) => {
-        this.recipe = this.recipeService.getRecipe(+data['id']);
+        this.recipe.next(this.recipeService.getRecipe(+data['id']))
       }
     );
   }
 
   addToShoppingList() {
-    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+    this.recipeService.addIngredientsToShoppingList(this.recipe.value.ingredients);
   }
 
   onRecipeEdit() {

@@ -13,7 +13,7 @@ import {Subscription} from 'rxjs';
            })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   ingredients: Ingredient[] = [];
-  private subscription: Subscription;
+  private subscription!: Subscription;
 
   constructor(private logginService: LoggingService, private shoppingListService: ShoppingListService) {
   }
